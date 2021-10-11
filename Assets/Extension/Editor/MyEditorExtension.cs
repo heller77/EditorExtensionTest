@@ -24,6 +24,7 @@ namespace Extension.Editor
         private Color _color;
         private string filepath = "";
         private string filename = "tex";
+        private Vector2Int filesize = new Vector2Int(100, 100);
 
         [MenuItem("tools/mywindow")]
         static void createWindow()
@@ -43,6 +44,7 @@ namespace Extension.Editor
 
                 filepath = EditorGUILayout.TextField("ファイルパス", filepath);
                 filename = EditorGUILayout.TextField("ファイル名", filename);
+                filesize = EditorGUILayout.Vector2IntField("ファイルサイズ", filesize);
             }
             EditorGUILayout.EndVertical();
 
@@ -66,17 +68,15 @@ namespace Extension.Editor
             {
                 if (GUILayout.Button("ホワイトノイズ生成", GUILayout.MinHeight(100)))
                 {
-                    _TextureGenerator.createNoiseTexture(filepath, filename);
+                    _TextureGenerator.createNoiseTexture(filepath, filename,filesize.x,filesize.y);
                 }
 
                 if (GUILayout.Button("ブロックノイズ生成", GUILayout.MinHeight(100)))
                 {
-                    _TextureGenerator.createNoiseTexture(filepath, filename);
                 }
 
                 if (GUILayout.Button("パーリンノイズ生成", GUILayout.MinHeight(100)))
                 {
-                    _TextureGenerator.createNoiseTexture(filepath, filename);
                 }
             }
             EditorGUILayout.EndHorizontal();
