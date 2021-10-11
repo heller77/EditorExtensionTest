@@ -6,6 +6,25 @@ namespace Extension.Editor
 {
     public class MyEditorExtension : EditorWindow
     {
+        private static TextureGenerator TG;
+
+        public static TextureGenerator _TextureGenerator
+        {
+            get
+            {
+                if (TG is null)
+                {
+                    TG = new TextureGenerator();
+                }
+
+                return TG;
+            }
+        }
+
+        private Color _color;
+        private string filepath = "";
+        private string filename = "tex";
+
         [MenuItem("tools/mywindow")]
         static void createWindow()
         {
@@ -14,13 +33,53 @@ namespace Extension.Editor
 
         private void OnGUI()
         {
-            EditorGUILayout.LabelField("hello world");
+            GUI.backgroundColor = Color.white;
+            EditorGUILayout.LabelField("共通設定");
 
-            GUILayout.Label("hogho");
-            if (GUILayout.Button("button"))
+            EditorGUILayout.BeginVertical();
             {
-                Debug.Log("button on");
+                _color = EditorGUILayout.ColorField("色", _color);
+
+
+                filepath = EditorGUILayout.TextField("ファイルパス", filepath);
+                filename = EditorGUILayout.TextField("ファイル名", filename);
             }
+            EditorGUILayout.EndVertical();
+
+            GUI.backgroundColor = Color.black;
+            EditorGUILayout.Space(10);
+
+
+            EditorGUILayout.LabelField("テクスチャ作成");
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("単色テクスチャ生成", GUILayout.MinHeight(100)))
+            {
+                _TextureGenerator.createTexture(filepath, filename, _color);
+            }
+
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.Space(2);
+
+            EditorGUILayout.LabelField("ランダムテクスチャ生成");
+            EditorGUILayout.BeginHorizontal(GUI.skin.box);
+            {
+                if (GUILayout.Button("ホワイトノイズ生成", GUILayout.MinHeight(100)))
+                {
+                    _TextureGenerator.createNoiseTexture(filepath, filename);
+                }
+
+                if (GUILayout.Button("ブロックノイズ生成", GUILayout.MinHeight(100)))
+                {
+                    _TextureGenerator.createNoiseTexture(filepath, filename);
+                }
+
+                if (GUILayout.Button("パーリンノイズ生成", GUILayout.MinHeight(100)))
+                {
+                    _TextureGenerator.createNoiseTexture(filepath, filename);
+                }
+            }
+            EditorGUILayout.EndHorizontal();
         }
     }
 }
