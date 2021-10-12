@@ -7,17 +7,24 @@ namespace Extension.Editor
 {
     public class TextureGenerator
     {
-        public void createTexture(string path,string filename,Color color)
+        // public void createTexture(string path,string filename,Color color)
+        // {
+        //     Texture2D texture = CreateOneColorTexture(100, 100, color);
+        //     path = "Assets/"+path+"/"+filename+".png";
+        //     byte[] bytes = texture.EncodeToPNG();
+        //     File.WriteAllBytes(path, bytes);
+        //     Debug.Log("画像出来た");
+        //     AssetDatabase.Refresh();
+        // }
+        public void createTexture(Texture2D texture,string path,string filename,Color color)
         {
-            Texture2D texture = CreateOneColorTexture(100, 100, color);
             path = "Assets/"+path+"/"+filename+".png";
             byte[] bytes = texture.EncodeToPNG();
             File.WriteAllBytes(path, bytes);
             Debug.Log("画像出来た");
             AssetDatabase.Refresh();
         }
-
-        private  Texture2D CreateOneColorTexture(int width, int height, Color color)
+        public Texture2D CreateOneColorTexture(int width, int height, Color color)
         {
             var texture = new Texture2D(width, height, TextureFormat.RGB24, false);
 
@@ -28,19 +35,12 @@ namespace Extension.Editor
                     texture.SetPixel(x,y,color);
                 }
             }
+            texture.Apply();
             return texture;
         }
 
-        public void createNoiseTexture(string path,string filename,int width,int height)
-        {
-            Texture2D texture = createWhiteNoise(width,height);
-            path = "Assets/"+path+"/"+filename+".png";
-            byte[] bytes = texture.EncodeToPNG();
-            File.WriteAllBytes(path, bytes);
-            Debug.Log("ノイズ画像出来た");
-            AssetDatabase.Refresh();
-        }
-        private  Texture2D createWhiteNoise(int width, int height)
+
+        public  Texture2D createWhiteNoise(int width, int height)
         {
             Debug.Log("noise start");
             var texture = new Texture2D(width, height,TextureFormat.RGB24,false);
@@ -54,6 +54,7 @@ namespace Extension.Editor
                 }
 
             }
+            texture.Apply();
 
             return texture;
         }

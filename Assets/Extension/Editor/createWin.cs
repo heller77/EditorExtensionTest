@@ -5,11 +5,11 @@ namespace Extension.Editor
 {
     public class createWin
     {
-        [MenuItem("tools/my")]
+        [MenuItem("tools/m44")]
         static void createWindow()
         {
             // GetWindow<MyEditorExtension>("Mywindow");
-            EditorWindow.GetWindow<MyEditorExtension>("test");
+            EditorWindow.GetWindow<MyEditorExtension2>("test");
         }
 
     }
